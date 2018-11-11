@@ -23,6 +23,7 @@ n = len(syslog)
 print(n)
 # print(syslog)
 # n = 100
+opNumber = int(n * (0.05))
 # create naive distance matrix for all logs
 distanceMatrix = [[0 for x in range(n)] for y in range(n)]
 for i in range(n):
@@ -47,7 +48,6 @@ for i in range(n):
 for i in range(n):
     for j in range(n):
         distanceMatrix[i][j] -= avg[j]
-print(distanceMatrix)
 cov = np.cov(distanceMatrix, rowvar=False)
 k = 2
 w, v = SPLA.eigh(cov, eigvals=(n - k, n - 1))
@@ -62,4 +62,20 @@ TransformedData = np.dot(U, distanceMatrix.T)
 # plt.show()
 dataSet = TransformedData.T
 centroids, clusterAssment = utils.kMeans(dataSet, 3)
+print('cluster center are:')
 print(centroids)
+a = array(clusterAssment)
+sortedList = list(argsort(a[:, 1]))
+topList = []
+for i in range(opNumber):
+    index = sortedList.index(n - 1 - i)
+    topList.append(dataSet[index])
+    print("top record is:")
+    print(dataSet[index])
+# print(sortedList)
+# index = np.where(sortedList == 97)
+# index.getfield(array)
+# print(index)
+# for i in range(opNumber)；
+#     sortedList.__index__()
+# for i in range(shape(dataSet)[0]):
