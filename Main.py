@@ -61,7 +61,8 @@ TransformedData = np.dot(U, distanceMatrix.T)
 # plt.plot(TransformedData[0, :], TransformedData[1, :], 'ro')
 # plt.show()
 dataSet = TransformedData.T
-centroids, clusterAssment = utils.kMeans(dataSet, 3)# 3 is the k for k-means. dataset is the nx2 matrix after PCA
+print(dataSet)
+centroids, clusterAssment = utils.kMeans(dataSet, 3,syslog)# 3 is the k for k-means. dataset is the nx2 matrix after PCA
 print('cluster center are:')
 print(centroids)
 a = array(clusterAssment) # clusterAssment is a list like [[1,12],[2,13],[3,10]], in which 1,2,3 are cluster and 12,13,10 is the distance from cluster center to the data point
@@ -72,7 +73,7 @@ for i in range(opNumber):# opNumber is the 5% of data points
     index = sortedList.index(n - 1 - i)# index(n-1-i), I want to get the 999th,998th,997th's index in the sortedList
     topList.append(dataSet[index])# then I use the index to get the  999th,998th,997th largest distance in the dataset.
     print("top record is:")
-    print(dataSet[index])
+    print(dataSet[index],syslog[i])# syslog[i] is the ith record in original data
 # print(sortedList)
 # index = np.where(sortedList == 97)
 # index.getfield(array)
