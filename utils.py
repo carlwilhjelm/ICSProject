@@ -1,9 +1,10 @@
-import numpy
 from numpy import *
+
 
 # calculate Ecli distance
 def distEclud(vecA, vecB):
     return sqrt(sum(power(vecA - vecB, 2)))
+
 
 # randomly choose k center
 def randCenter(dataSet, k):
@@ -15,10 +16,11 @@ def randCenter(dataSet, k):
         centroids[:, j] = minJ + rangeJ * random.rand(k, 1)
     return centroids
 
+
 # do cluster
 def kMeans(dataSet, k, syslog, distMeas=distEclud, createCenter=randCenter):
-    m = shape(dataSet)[0]# row of dataset,dataset is [x,y]
-    clusterAssment = mat(zeros((m, 3)))# create matrix [cluster,distance, index of syslog] like [0,19, 2]
+    m = shape(dataSet)[0]  # row of dataset,dataset is [x,y]
+    clusterAssment = mat(zeros((m, 3)))  # create matrix [cluster,distance, index of syslog] like [0,19, 2]
     centriods = createCenter(dataSet, k)
     clusterChange = True
     while clusterChange:
@@ -41,4 +43,3 @@ def kMeans(dataSet, k, syslog, distMeas=distEclud, createCenter=randCenter):
     # the clusterAssment is a nx3 matrix, each record is like [0,19,2] which means
     # this record is in cluster 0, distance from cluster center=19, it is the 2rd row record in original syslog dataset
     return centriods, clusterAssment
-
