@@ -16,9 +16,9 @@ def randCenter(dataSet, k):
     return centroids
 
 # do cluster
-def kMeans(dataSet, k, distMeas=distEclud, createCenter=randCenter):
-    m = shape(dataSet)[0]
-    clusterAssment = mat(zeros((m, 2)))
+def kMeans(dataSet, k, syslog, distMeas=distEclud, createCenter=randCenter):
+    m = shape(dataSet)[0]# row of dataset,dataset is [x,y]
+    clusterAssment = mat(zeros((m, 3)))# create matrix [cluster,distance, index of syslog] like [0,19, 2]
     centriods = createCenter(dataSet, k)
     clusterChange = True
     while clusterChange:
@@ -27,15 +27,18 @@ def kMeans(dataSet, k, distMeas=distEclud, createCenter=randCenter):
             minDist = inf;
             minIndex = -1
             for j in range(k):
-                distJI = distMeas(centriods[j, :], dataSet[i, :])
+                distJI = distMeas(centriods[j, 0:1], dataSet[i, 0:1])
                 if distJI < minDist:
                     minDist = distJI;
                     minIndex = j
             if clusterAssment[i, 0] != minIndex:
                 clusterChange = True;
-            clusterAssment[i, :] = minIndex, minDist ** 2
+            clusterAssment[i, :] = minIndex, minDist ** 2, i
         print(centriods)
         for cent in range(k):
             ptsInCluster = dataSet[nonzero(clusterAssment[:, 0].A == cent)[0]]
             centriods[cent, :] = mean(ptsInCluster, axis=0)
+    # the clusterAssment is a nx3 matrix, each record is like [0,19,2] which means
+    # this record is in cluster 0, distance from cluster center=19, it is the 2rd row record in original syslog dataset
     return centriods, clusterAssment
+
