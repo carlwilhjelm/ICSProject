@@ -22,7 +22,7 @@ distanceMatrix = [[0 for x in range(n)] for y in range(n)]
 for i in range(n):
     for j in range(i, n):
         distance = 0
-        k = max(len(syslog[i]), len(syslog[j]))
+        k = min(len(syslog[i]), len(syslog[j]))
         for e in range(k):
             if syslog[i][e] != syslog[j][e]:
                 distance += 1
